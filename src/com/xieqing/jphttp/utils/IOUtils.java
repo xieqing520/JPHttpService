@@ -14,6 +14,7 @@ public class IOUtils {
 			while ((len=inputStream.read(buffer))>0) {
 				byteArrayOutputStream.write(buffer, 0, len);
 			}
+			inputStream.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

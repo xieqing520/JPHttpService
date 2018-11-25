@@ -24,7 +24,9 @@ import com.xieqing.jphttp.utils.ResuorceUtil;
 
 public abstract class Action extends ActionHandler{
 	private Parser parser;
-	
+	public Action(Action action) {
+		setParser(action.getParser());
+	}
 	public Action() {
 		super();
 	}
@@ -40,15 +42,16 @@ public abstract class Action extends ActionHandler{
 	
 	public String __WWWROOT__="";
 	public String __FILE__="";
-	public String __HOST__="";
 	public List<Object> defaultPage=new ArrayList<>();
 	public Map<String,String> mime=new HashMap<>();
 	
 	
 	private void init() {
-		__HOST__=getParser().getHttp().getRequestHeaders().get("Host").get(0);
+		__HOST__=parser.getHttp().getRequestHeaders().get("Host").get(0);
 		readHost();
 		__FILE__=__WWWROOT__+getParser().getHttpURI().getPath();
+		JSONObject jsonObject=getWebsite(__HOST__);
+		websiteConfig=jsonObject;
 	}
 	
 	/*
@@ -132,7 +135,7 @@ public abstract class Action extends ActionHandler{
 			if (!empty(item)) {
 				String[] e2=item.split(":");
 				if (e2.length>=2) {
-					getParser().getHttp().getResponseHeaders().set(e2[0], e2[1]);
+					getParser().getHttp().getResponseHeaders().set(item.substring(0,item.indexOf(":")), item.substring(item.indexOf(":")+1,item.length()));
 				}
 			}
 		}
@@ -157,17 +160,25 @@ public abstract class Action extends ActionHandler{
 		}
 		return "application/octet-stream";
 	}
-	
+	public void sendResponseCode(int code) {
+		try {
+			getParser().getHttp().sendResponseHeaders(code, 0);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	/*
 	 * 写出字节集
 	 * */
 	public void write(byte[] bytes) {
 		try {
 			getParser().getHttp().sendResponseHeaders(200, 0);
+		} catch (IOException e1) {
+		}
+		try {
 			getParser().getHttp().getResponseBody().write(bytes);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 	}
 	

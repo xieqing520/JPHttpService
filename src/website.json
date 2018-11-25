@@ -73,6 +73,15 @@
 			"index.jp",
 			"index.jp"
 		],
+		"Error_Page":{
+			"404":"404-2.html"
+		},
+		"Actions":[
+			{
+				"path":"demo.jp",
+				"class":"use.DemoAction"
+			}
+		],
 		"HOST":[
 			"localhost",
 			"192.168.0.111"

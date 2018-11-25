@@ -5,7 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 import com.xieqing.jphttp.action.Action;
+import com.xieqing.jphttp.action.system.error.E_404;
 import com.xieqing.jphttp.utils.IOUtils;
+import com.xieqing.jphttp.utils.Log;
 
 public class FileAction extends Action{
 
@@ -23,6 +25,8 @@ public class FileAction extends Action{
 			outFile(__FILE__);
 			return;
 		}
+		
+		new E_404(this).doAction();
 	}
 
 	private void outFile(String path) {

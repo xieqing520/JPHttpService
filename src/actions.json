@@ -1,7 +1,3 @@
 {
-	"actions":{
-		"demo.jp":{
-			"class":"use.DemoAction"
-		}
-	}
+	
 }
