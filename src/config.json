@@ -1,0 +1,7 @@
+{
+	"name":"JavaPHP",
+	"Main":{
+		"SERVICE_PORT":80,
+		"SERVICE_REQUEST_MAX_COUNT":10000
+	}
+}
